@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:todo/screens/add_todo_screen.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -9,6 +10,13 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Hive.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

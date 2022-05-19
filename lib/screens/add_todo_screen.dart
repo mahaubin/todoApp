@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:todo/boxes.dart';
+import 'package:todo/model/todo.dart';
 
 class AddTodoScreen extends StatefulWidget {
   AddTodoScreen({
@@ -15,7 +18,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final TextEditingController _description = new TextEditingController();
   validate() {
     if (_formKey.currentState!.validate() && _formKey.currentState != null) {
-      print(_title.text);
+      _onFormSubmit();
+      print("The form is validate");
     } else {
       print("The form is not validate");
     }
@@ -79,5 +83,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             ],
           )),
     );
+  }
+
+  void _onFormSubmit() {
+    Box<Todo> todoBox = Hive.box<Todo>(HiveBoxes.todo);
+    todoBox.add(Todo(title: _title.text, description: _description.text));
+    Navigator.of(context).pop();
+    print(todoBox);
   }
 }
