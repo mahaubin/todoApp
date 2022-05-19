@@ -16,6 +16,22 @@ class _TodoListScreenState extends State<TodoListScreen> {
         title: Text("List todoing"),
         centerTitle: true,
       ),
+      body: Container(
+        child: ListView.builder(
+            itemCount: 4,
+            itemBuilder: (context, index) {
+              return Dismissible(
+                  onDismissed: (direction) {},
+                  background: Container(
+                    color: Colors.red,
+                  ),
+                  key: UniqueKey(),
+                  child: ListTile(
+                    title: Text("Title"),
+                    subtitle: Text("Description"),
+                  ));
+            }),
+      ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
