@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/screens/add_todo_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Titre de l'aplication"),
-            centerTitle: true,
-          ),
-        ));
+        home: AddTodoScreen());
   }
 }
