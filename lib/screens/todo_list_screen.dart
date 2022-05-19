@@ -41,7 +41,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
               itemBuilder: (context, index) {
                 Todo? res = box.getAt(index);
                 return Dismissible(
-                    onDismissed: (direction) {},
+                    onDismissed: (direction) {
+                      res!.delete();
+                    },
                     background: Container(
                       color: Colors.red,
                     ),
