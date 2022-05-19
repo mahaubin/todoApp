@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:todo/boxes.dart';
 import 'package:todo/screens/add_todo_screen.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import '../model/todo.dart';
 
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({Key? key}) : super(key: key);
@@ -24,21 +28,30 @@ class _TodoListScreenState extends State<TodoListScreen> {
         title: Text("List todoing"),
         centerTitle: true,
       ),
-      body: Container(
-        child: ListView.builder(
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return Dismissible(
-                  onDismissed: (direction) {},
-                  background: Container(
-                    color: Colors.red,
-                  ),
-                  key: UniqueKey(),
-                  child: ListTile(
-                    title: Text("Title"),
-                    subtitle: Text("Description"),
-                  ));
-            }),
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<Todo>(HiveBoxes.todo).listenable(),
+        builder: (context, Box<Todo> box, _) {
+          if (box.values.isEmpty) {
+            return Center(
+              child: Text("To do list is empty"),
+            );
+          }
+          return ListView.builder(
+              itemCount: box.values.length,
+              itemBuilder: (context, index) {
+                Todo? res = box.getAt(index);
+                return Dismissible(
+                    onDismissed: (direction) {},
+                    background: Container(
+                      color: Colors.red,
+                    ),
+                    key: UniqueKey(),
+                    child: ListTile(
+                      title: Text(res!.title),
+                      subtitle: Text(res.description),
+                    ));
+              });
+        },
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
